@@ -15,7 +15,8 @@ public class InputHandler : MonoBehaviour
     public bool jumpDown = false;
     public bool fireDown = false;
     public bool aimDown = false;
-    
+    public bool damageDown = false;
+    public bool pausePressed = false;
 
     private void Awake()
     {
@@ -55,5 +56,25 @@ public class InputHandler : MonoBehaviour
         controls.Locomotion.Aim.performed += controls => aimDown = true;
         controls.Locomotion.Aim.canceled += controls => aimDown = false;
 
+        controls.Locomotion.Damage.performed += controls =>
+        {
+            damageDown = true;
+
+        };
+
+        controls.Locomotion.Damage.canceled += controls => {
+            damageDown = false;
+
+        };
+
+        controls.Locomotion.Pause.performed += controls =>
+        {
+            pausePressed = true;
+        };
+
+        controls.Locomotion.Pause.canceled += controls =>
+        {
+            pausePressed = false;
+        };
     }
 }

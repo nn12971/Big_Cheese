@@ -58,7 +58,8 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
-#Custom Ignores
+# Custom Ignores
 
 Assets/Graphics/
+Assets/Audio/
 Assets/Animation/
