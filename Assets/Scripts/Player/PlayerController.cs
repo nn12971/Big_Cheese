@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     private InputHandler input;
     private CharacterController controller;
 
+    private Animator anim;
+
     #region Gravity Variables
 
     [SerializeField]
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
     {
         input = InputHandler.instance;
         controller = GetComponent<CharacterController>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     
@@ -43,6 +46,9 @@ public class PlayerController : MonoBehaviour
     private void HandleMovement(float delta)
     {
         Vector3 movement = (transform.right * input.move.x) + (transform.forward * input.move.y);
+
+        anim.SetFloat("horizontal", movement.x);
+        anim.SetFloat("vertical", Mathf.Abs(movement.z));
 
         controller.Move(movement * 5 * delta);
     }
