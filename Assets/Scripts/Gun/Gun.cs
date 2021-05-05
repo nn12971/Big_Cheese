@@ -48,6 +48,8 @@ public abstract class Gun : MonoBehaviour
 
     protected abstract void CheckForFire();
 
+    
+
     protected void Shoot()
     {
         if (input.aimDown)
@@ -57,6 +59,8 @@ public abstract class Gun : MonoBehaviour
         else
         {
             HipShoot();
+
+            
         }
     }
 
@@ -116,7 +120,7 @@ public abstract class Gun : MonoBehaviour
     {
         if (input.aimDown)
         {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, aimPosition, Time.deltaTime * adsSpeed);
+            transform.localPosition = Vector3.Lerp(transform.localPosition, aimPosition, Time.deltaTime * adsSpeed );
         } else
         {
             transform.localPosition = Vector3.Lerp(transform.localPosition, originalPosition, Time.deltaTime * adsSpeed);

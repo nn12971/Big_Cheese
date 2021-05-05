@@ -24,6 +24,7 @@ public class AutomaticGun : Gun
         CheckForFire();
         AimDownSights();
         ResetPosition();
+        
     }
 
     protected override void CheckForFire()
