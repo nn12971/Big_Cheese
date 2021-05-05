@@ -61,6 +61,7 @@ crashlytics-build.properties
 # Custom Ignores
 
 Assets/Graphics/
+Assets/Audio/
 Assets/Animation/
 Assets/Audio/
 Assets/DinoFracture/
