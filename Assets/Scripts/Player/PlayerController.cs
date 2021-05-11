@@ -1,13 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private InputHandler input;
     private CharacterController controller;
+    public Stats stats;
 
-    private Animator anim;
+    public int maxHealth = 100;
+    public int Currenthealth;
+
+    public bool takingDamage = false;
+
+    public bool isHurting = false;
+    public float hurtTimer = 0;
 
     #region Gravity Variables
 
@@ -32,15 +40,73 @@ public class PlayerController : MonoBehaviour
     {
         input = InputHandler.instance;
         controller = GetComponent<CharacterController>();
-        anim = GetComponentInChildren<Animator>();
+        Currenthealth = maxHealth;
+        stats.SetMaxHealth(maxHealth);
+        stats.PauseMenuUI.SetActive(false);
     }
 
-    
-    void FixedUpdate()
+
+    void Update()
     {
-        HandleMovement(Time.deltaTime);
-        HandleGravity(Time.deltaTime);
-        HandleJump();
+        if (input.pausePressed) {
+
+            if (!stats.isPaused)
+            {
+                stats.Pause();
+            } else
+            {
+                stats.Resume();
+            }
+
+            input.pausePressed = false;
+        }
+        else
+        { 
+
+            if (Currenthealth >= 0)
+            {
+                HandleMovement(Time.deltaTime);
+                HandleGravity(Time.deltaTime);
+                HandleJump();
+            }
+
+            if (input.damageDown && !takingDamage)
+            {
+                takingDamage = true;
+                TakeDamage(21);
+            
+            } else
+            {
+                takingDamage = false;
+            }
+
+            if(isHurting && hurtTimer <= 3)
+            {
+                hurtTimer += Time.deltaTime;
+            } else
+            {
+                isHurting = false;
+                hurtTimer = 0;
+            }
+        }
+
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("hurt") && !isHurting)
+        {
+            isHurting = true;
+            TakeDamage(21);
+        }
+    }
+
+
+    void TakeDamage(int damage)
+    {
+        Currenthealth -= damage;
+
+        stats.SetHealth(Currenthealth);
     }
 
     private void HandleMovement(float delta)

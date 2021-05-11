@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class CameraController : MonoBehaviour
 {
     private InputHandler input;
+    private PlayerController cont;
 
     [SerializeField]
     private Transform playerParent;
@@ -18,20 +19,31 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float sens = 100f;
 
+
     private float xRot = 0f;
 
+    public Slider sensitivity;
+    public Slider vsensitivity;
+    public Slider hsensitivity;
+
+    public Text SensTxt;
+    public Text vSensTxt;
+    public Text hSensTxt;
 
     void Start()
     {
         input = InputHandler.instance;
         Cursor.lockState = CursorLockMode.Locked;
+
+        hSens = sensitivity.value;
+        vSens = sensitivity.value;
+        sens = sensitivity.value;
     }
 
 
     void Update()
     {
         HandleLook(Time.deltaTime);
-
     }
 
     private void HandleLook(float delta)
@@ -39,10 +51,12 @@ public class CameraController : MonoBehaviour
         float mouseX;
         float mouseY;
 
-        if (hSens == vSens)
+
+        if (hsensitivity.value == 550 && vsensitivity.value == 550)
         {
             mouseX = input.look.x * sens * delta;
             mouseY = input.look.y * sens * delta;
+
         }
         else
         {
@@ -57,5 +71,17 @@ public class CameraController : MonoBehaviour
 
         //handle turning
         playerParent.Rotate(Vector3.up, mouseX);
+    }
+
+
+    public void UpdateSensitivity()
+    {
+        hSens = hsensitivity.value;
+        vSens = vsensitivity.value;
+        sens = sensitivity.value;
+        SensTxt.text = "" + sensitivity.value;
+        vSensTxt.text = "" + vsensitivity.value;
+        hSensTxt.text = "" + hsensitivity.value;
+
     }
 }

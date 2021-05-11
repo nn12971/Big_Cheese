@@ -31,7 +31,7 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""type"": ""PassThrough"",
                     ""id"": ""89e13267-e1a2-49aa-89f0-38784b20aad4"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """"
                 },
                 {
@@ -57,6 +57,22 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Damage"",
+                    ""type"": ""Button"",
+                    ""id"": ""9f58bb01-e922-4300-8e23-9b642db33522"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""c5ba868d-c4bc-488e-824c-a3bf65f2fe9d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -158,6 +174,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81d3cf8c-c607-4d1b-a88e-05ed1eac7946"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Damage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a80c248e-3bde-43a5-a5b9-16346ef4125f"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -171,6 +209,8 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Locomotion_Jump = m_Locomotion.FindAction("Jump", throwIfNotFound: true);
         m_Locomotion_Fire = m_Locomotion.FindAction("Fire", throwIfNotFound: true);
         m_Locomotion_Aim = m_Locomotion.FindAction("Aim", throwIfNotFound: true);
+        m_Locomotion_Damage = m_Locomotion.FindAction("Damage", throwIfNotFound: true);
+        m_Locomotion_Pause = m_Locomotion.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -225,6 +265,8 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Locomotion_Jump;
     private readonly InputAction m_Locomotion_Fire;
     private readonly InputAction m_Locomotion_Aim;
+    private readonly InputAction m_Locomotion_Damage;
+    private readonly InputAction m_Locomotion_Pause;
     public struct LocomotionActions
     {
         private @Controls m_Wrapper;
@@ -234,6 +276,8 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Locomotion_Jump;
         public InputAction @Fire => m_Wrapper.m_Locomotion_Fire;
         public InputAction @Aim => m_Wrapper.m_Locomotion_Aim;
+        public InputAction @Damage => m_Wrapper.m_Locomotion_Damage;
+        public InputAction @Pause => m_Wrapper.m_Locomotion_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Locomotion; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +302,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnAim;
+                @Damage.started -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnDamage;
+                @Damage.performed -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnDamage;
+                @Damage.canceled -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnDamage;
+                @Pause.started -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_LocomotionActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_LocomotionActionsCallbackInterface = instance;
             if (instance != null)
@@ -277,6 +327,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @Damage.started += instance.OnDamage;
+                @Damage.performed += instance.OnDamage;
+                @Damage.canceled += instance.OnDamage;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -288,5 +344,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnDamage(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }
