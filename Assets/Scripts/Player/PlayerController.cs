@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     public Stats stats;
 
+    Animator anim;
+
     public int maxHealth = 100;
     public int Currenthealth;
 
