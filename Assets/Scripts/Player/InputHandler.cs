@@ -17,6 +17,7 @@ public class InputHandler : MonoBehaviour
     public bool aimDown = false;
     public bool damageDown = false;
     public bool pausePressed = false;
+    public bool advSens = false;
 
     private void Awake()
     {

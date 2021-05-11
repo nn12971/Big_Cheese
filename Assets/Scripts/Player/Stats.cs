@@ -10,6 +10,7 @@ public class Stats : MonoBehaviour
     public Gradient gradient;
     public Image fill;
     public GameObject PauseMenuUI;
+    public Button quitButton;
 
     public bool isPaused = false;
 
@@ -54,5 +55,16 @@ public class Stats : MonoBehaviour
         Time.timeScale = 0f;
         input.pausePressed = true;
         isPaused = true;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+        Debug.Log("Quit Game");
+    }
+
+    public void AdvSense()
+    {
+        input.advSens = true;
     }
 }

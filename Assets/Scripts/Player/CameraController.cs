@@ -23,6 +23,12 @@ public class CameraController : MonoBehaviour
     private float xRot = 0f;
 
     public Slider sensitivity;
+    public Slider vsensitivity;
+    public Slider hsensitivity;
+
+    public Text SensTxt;
+    public Text vSensTxt;
+    public Text hSensTxt;
 
     void Start()
     {
@@ -45,14 +51,12 @@ public class CameraController : MonoBehaviour
         float mouseX;
         float mouseY;
 
-        
 
-        if (hSens == vSens)
+        if (hsensitivity.value == 500 && vsensitivity.value == 500)
         {
             mouseX = input.look.x * sens * delta;
             mouseY = input.look.y * sens * delta;
 
-            Debug.Log("Raw values: " + input.look.x + " , " + input.look.y + " Sensitivity Modded Values: " + mouseX + " , " + mouseY);
         }
         else
         {
@@ -72,8 +76,12 @@ public class CameraController : MonoBehaviour
 
     public void UpdateSensitivity()
     {
-        hSens = sensitivity.value;
-        vSens = sensitivity.value;
+        hSens = hsensitivity.value;
+        vSens = vsensitivity.value;
         sens = sensitivity.value;
+        SensTxt.text = "" + sensitivity.value;
+        vSensTxt.text = "" + vsensitivity.value;
+        hSensTxt.text = "" + hsensitivity.value;
+
     }
 }
