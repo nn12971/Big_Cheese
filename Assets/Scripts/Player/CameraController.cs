@@ -52,7 +52,7 @@ public class CameraController : MonoBehaviour
         float mouseY;
 
 
-        if (hsensitivity.value == 500 && vsensitivity.value == 500)
+        if (hsensitivity.value == 550 && vsensitivity.value == 550)
         {
             mouseX = input.look.x * sens * delta;
             mouseY = input.look.y * sens * delta;
