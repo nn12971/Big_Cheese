@@ -9,8 +9,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     public Stats stats;
 
-    Animator anim;
-
     public int maxHealth = 100;
     public int Currenthealth;
 
@@ -114,9 +112,6 @@ public class PlayerController : MonoBehaviour
     private void HandleMovement(float delta)
     {
         Vector3 movement = (transform.right * input.move.x) + (transform.forward * input.move.y);
-
-        anim.SetFloat("horizontal", movement.x);
-        anim.SetFloat("vertical", Mathf.Abs(movement.z));
 
         controller.Move(movement * 5 * delta);
     }
