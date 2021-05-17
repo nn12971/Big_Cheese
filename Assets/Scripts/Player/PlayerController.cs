@@ -40,9 +40,7 @@ public class PlayerController : MonoBehaviour
     {
         input = InputHandler.instance;
         controller = GetComponent<CharacterController>();
-        Currenthealth = maxHealth;
-        stats.SetMaxHealth(maxHealth);
-        stats.PauseMenuUI.SetActive(false);
+        
     }
 
 
@@ -112,6 +110,9 @@ public class PlayerController : MonoBehaviour
     private void HandleMovement(float delta)
     {
         Vector3 movement = (transform.right * input.move.x) + (transform.forward * input.move.y);
+
+        anim.SetFloat("horizontal", movement.x);
+        anim.SetFloat("vertical", Mathf.Abs(movement.z));
 
         controller.Move(movement * 5 * delta);
     }
